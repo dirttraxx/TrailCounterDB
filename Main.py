@@ -66,29 +66,38 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.SQLcursor.execute(query,values)
         sensors = self.SQLcursor.fetchall()    # get all selected rows
         
+        query = "SELECT * FROM COUNT"
+        self.SQLcursor.execute(query)
+        counts = self.SQLcursor.fetchall()    # get all selected rows
+        
         self.model = QtGui.QStandardItemModel()
-        self.model.setHorizontalHeaderLabels(['Trail', 'Location', 'Owner','Sensor SN','BatteryLife','Position'])
+        self.model.setHorizontalHeaderLabels(['Trail', 'Location', 'Owner','Sensor SN','BatteryLife','Position','Timestamp'])
         root = self.model.invisibleRootItem()
         
         for t in trails:
-            root.appendRow([QtGui.QStandardItem(t[0]), QtGui.QStandardItem(t[1]), QtGui.QStandardItem(t[2]),QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem("")])
+            root.appendRow([QtGui.QStandardItem(t[0]), QtGui.QStandardItem(t[1]), QtGui.QStandardItem(t[2]),QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem("")])
+            #indexA = self.model->index(0, 0, QModelIndex())
+            
             for s in sensors:
                 if s[3]==t[0]:
-                    root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2])])
+                    #stditem.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2])])
+                    root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(str(s[1])), QtGui.QStandardItem(s[2]),QtGui.QStandardItem("")])
+                    #print(root.rowCount())
+                    #self.model.itemFromIndex(index(root.rowCount(), 0, QModelIndex()).appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2])])
+                    #self.model.itemFromIndex(indexA).appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2])])
+                    for c in counts:
+                        if c[0]==s[0]:
+                            timestr = str(c[1])
+                            root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(""), QtGui.QStandardItem(""), QtGui.QStandardItem(""),QtGui.QStandardItem(timestr)])
             
         for s in sensors:
             #print(r)
             if s[3]==None: #If the trailname is null
                 #print(r)
-                root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2])])
+                root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2]),QtGui.QStandardItem("")])
             
-       
-        
         self.ui.treeView.setModel(self.model)
 
-    
-    
-    
         
     def login(self):
         L_uname = self.loginWindow.ui.UsernameEdit.text()
@@ -164,8 +173,8 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
     def create_login_window(self):
         if self.connection_status == "Connected":
             self.loginWindow = Login_Window()
-            self.loginWindow.ui.UsernameEdit.setText('user1') #Autofill Address
-            self.loginWindow.ui.PasswordEdit.setText('pass1') #Autofill Address
+            self.loginWindow.ui.UsernameEdit.setText('user1') #Autofill
+            self.loginWindow.ui.PasswordEdit.setText('pass1') #Autofill
             self.loginWindow.show()
             self.loginWindow.ui.LoginButton.clicked.connect(self.login)
         else:

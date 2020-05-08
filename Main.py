@@ -56,32 +56,41 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
 
 
     def showTree(self):
-        username = self.user
         query = "SELECT * FROM TRAIL WHERE UserName=%s"
-        values = [username]
+        values = [self.user]
         self.SQLcursor.execute(query,values)
-        rows = self.SQLcursor.fetchall()    # get all selected rows, as Barmar mentioned
+        trails = self.SQLcursor.fetchall()    # get all selected rows
         
+        query = "SELECT * FROM SENSOR WHERE UserName=%s"
+        values = [self.user]
+        self.SQLcursor.execute(query,values)
+        sensors = self.SQLcursor.fetchall()    # get all selected rows
         
         self.model = QtGui.QStandardItemModel()
-        self.model.setHorizontalHeaderLabels(['Trail', 'Location', 'Owner'])
+        self.model.setHorizontalHeaderLabels(['Trail', 'Location', 'Owner','Sensor SN','BatteryLife','Position'])
         root = self.model.invisibleRootItem()
         
-        for r in rows:
+        for t in trails:
+           
+            root.appendRow([QtGui.QStandardItem(t[0]), QtGui.QStandardItem(t[1]), QtGui.QStandardItem(t[2]),QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem("")])
+            for s in sensors:
+                if s[3]==t[2]:
+                    root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2]),])
+            
+        for s in sensors:
             #print(r)
-            root.appendRow([QtGui.QStandardItem(r[0]), QtGui.QStandardItem(r[1]), QtGui.QStandardItem(r[2]),])
-        
-        #QModelIndex index = model->index(row, column, parent);
-        #root.appendRow([QtGui.QStandardItem('Trail_1'), QtGui.QStandardItem('Nowhere'),])
-        #root.appendRow([QtGui.QStandardItem('Trail_2'), QtGui.QStandardItem('Somewhere'),])
-        
-        #indexA = self.model.index(0, 0, "Help");
-        #QModelIndex indexA = model->index(0, 0, QModelIndex());
-        #QModelIndex indexB = model->index(1, 0, indexA);
-        #QModelIndex indexC = model->index(2, 1, QModelIndex());
+            if s[3]==None: #If the trailname is null
+                #print(r)
+                root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2])])
+            
+       
         
         self.ui.treeView.setModel(self.model)
 
+    
+    
+    
+        
     def login(self):
         L_uname = self.loginWindow.ui.UsernameEdit.text()
         L_psw = self.loginWindow.ui.PasswordEdit.text()

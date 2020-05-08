@@ -95,6 +95,10 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
             if s[3]==None: #If the trailname is null
                 #print(r)
                 root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2]),QtGui.QStandardItem("")])
+                for c in counts:
+                        if c[0]==s[0]:
+                            timestr = str(c[1])
+                            root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(""), QtGui.QStandardItem(""), QtGui.QStandardItem(""),QtGui.QStandardItem(timestr)])
             
         self.ui.treeView.setModel(self.model)
 
@@ -173,8 +177,8 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
     def create_login_window(self):
         if self.connection_status == "Connected":
             self.loginWindow = Login_Window()
-            self.loginWindow.ui.UsernameEdit.setText('user1') #Autofill
-            self.loginWindow.ui.PasswordEdit.setText('pass1') #Autofill
+            #self.loginWindow.ui.UsernameEdit.setText('user1') #Autofill
+            #self.loginWindow.ui.PasswordEdit.setText('pass1') #Autofill
             self.loginWindow.show()
             self.loginWindow.ui.LoginButton.clicked.connect(self.login)
         else:

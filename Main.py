@@ -109,6 +109,12 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
     def create_delete_sensor_window(self):
         self.deleteSensorwindow = DeleteSensor_Window()
         self.deleteSensorwindow.show()
+        query = "SELECT SerialNo FROM SENSOR"
+        self.SQLcursor.execute(query)
+        rows = self.SQLcursor.fetchall()
+        for r in rows:
+            self.deleteSensorwindow.ui.comboBox.addItem(r[0])
+        self.deleteSensorwindow.ui.Delete.clicked.connect(self.delete_sensor)
         self.deleteSensorwindow.ui.Cancel.clicked.connect(self.deleteSensorwindow.close)
         
     def create_login_window(self):
@@ -137,8 +143,8 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
     
     def delete_trail(self):
         trailname = self.deleteTrailwindow.ui.comboBox.currentText()
-        query = "DELETE FROM TRAIL WHERE Name=\"%s\""
-        values = (trailname)
+        query = "DELETE FROM TRAIL WHERE Name=%s"
+        values = [trailname]
         self.SQLcursor.execute(query, values)
         self.cnx.commit()
         self.deleteTrailwindow.close()
@@ -155,12 +161,12 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.showTree()
     
     def delete_sensor(self):
-        sensorSN = self.deleteSensorwindow.ui.NameEdit.text()
+        sensorSN = self.deleteSensorwindow.ui.comboBox.currentText()
         query = "DELETE FROM SENSOR WHERE serialNo=%s"
-        values = (sensorSN)
+        values = [sensorSN]
         self.SQLcursor.execute(query, values)
         self.cnx.commit()
-        self.deleteTrailwindow.close()
+        self.deleteSensorwindow.close()
         self.showTree()
             
         

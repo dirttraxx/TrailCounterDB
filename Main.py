@@ -79,9 +79,17 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.ui.treeView.setModel(self.model)
 
     def login(self):
-        L_uname = self.connectWindow.ui.AddressEdit.text()
-        L_psw = self.connectWindow.ui.PortEdit.text()
-
+        L_uname = self.loginWindow.ui.UsernameEdit.text()
+        L_psw = self.loginWindow.ui.PasswordEdit.text()
+        
+        query = "SELECT Password FROM USER WHERE Username=%s"
+        self.SQLcursor.execute(query,(L_uname,))
+        db_psw = self.SQLcursor.fetchall()
+        #print(db_psw[0][0])
+        if (L_psw==db_psw[0][0]):
+            self.user = L_uname
+            self.showTree()
+            self.loginWindow.close()
 
     def create_add_trail_window(self):
         self.addTrailwindow = AddTrail_Window()

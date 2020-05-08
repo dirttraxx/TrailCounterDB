@@ -26,8 +26,8 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
     def ConnectMySQL(self):
         try:
             self.cnx = mysql.connector.connect(user='dbtester', password='gominers',
-                              host='proxy18.rt3.io',
-                              port='38982',
+                              host='proxy13.remot3.it',
+                              port='38978',
                               database='trailcountersdb')
 
         except mysql.connector.Error as err:
@@ -80,7 +80,9 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         query = "SELECT Name FROM TRAIL"
         self.SQLcursor.execute(query)
         rows = self.SQLcursor.fetchall()
-        self.deleteTrailwindow.ui.comboBox.addItem(rows)
+        for r in rows:
+            self.deleteTrailwindow.ui.comboBox.addItem(r[0])
+        self.deleteTrailwindow.ui.Delete.clicked.connect(self.delete_trail)
         self.deleteTrailwindow.ui.Cancel.clicked.connect(self.close_delete_trail_window)
         
     def create_add_sensor_window(self):
@@ -107,8 +109,8 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.showTree()
     
     def delete_trail(self):
-        trailname = self.deleteTrailwindow.ui.comboBox.text()
-        query = "DELETE FROM TRAIL WHERE name=%s"
+        trailname = self.deleteTrailwindow.ui.comboBox.currentText()
+        query = "DELETE FROM TRAIL WHERE Name=\"%s\""
         values = (trailname)
         self.SQLcursor.execute(query, values)
         self.cnx.commit()

@@ -32,3 +32,19 @@ class DeleteSensor_Window(QtWidgets.QWidget):
         self.ui = Ui_DeleteSensor()
         self.ui.setupUi(self)
         
+        
+from Login_init import Ui_Login
+class Login_Window(QtWidgets.QWidget):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_Login()
+        self.ui.setupUi(self)
+  
+  
+from Connect_init import Ui_Connect
+class Connect_Window(QtWidgets.QWidget):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_Connect()
+        self.ui.setupUi(self)
+  

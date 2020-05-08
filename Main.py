@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import mysql.connector
 
 from Main_init import Ui_MainWindow
-from Windows import AddTrail_Window, DeleteTrail_Window, AddSensor_Window, DeleteSensor_Window
+from Windows import AddTrail_Window, DeleteTrail_Window, AddSensor_Window, DeleteSensor_Window, Login_Window, Connect_Window
 
 class TrailCounter_MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -20,14 +20,23 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.ui.actionDeleteTrail.triggered.connect(self.create_delete_trail_window)
         self.ui.actionAddSensor.triggered.connect(self.create_add_sensor_window)
         self.ui.actionDeleteSensor.triggered.connect(self.create_delete_sensor_window)
-        self.ui.actionLogin.triggered.connect(self.ConnectMySQL)
+        self.ui.actionLogin.triggered.connect(self.create_login_window)
+        self.ui.actionConnect.triggered.connect(self.create_connect_window)
         
 
     def ConnectMySQL(self):
+        self.connectWindow.close()
+        c_addr = self.connectWindow.ui.AddressEdit.text()
+        c_port = self.connectWindow.ui.PortEdit.text()
+        
+        if (c_addr == ''):
+            c_addr='localhost'
+        if (c_port==''):
+            c_port='3306'
+        
         try:
             self.cnx = mysql.connector.connect(user='dbtester', password='gominers',
-                              host='proxy13.remot3.it',
-                              port='38978',
+                              host=c_addr,port=c_port,
                               database='trailcountersdb')
 
         except mysql.connector.Error as err:
@@ -39,7 +48,9 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
                 print(err)
         else:
             self.SQLcursor = self.cnx.cursor()
-            self.showTree()        
+            self.connection_status = 'Connected' #to be used to disable other options if not connected
+            self.showTree()
+            self.create_login_window()      
 
 
     def showTree(self):
@@ -67,12 +78,16 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         
         self.ui.treeView.setModel(self.model)
 
+    def login(self):
+        L_uname = self.connectWindow.ui.AddressEdit.text()
+        L_psw = self.connectWindow.ui.PortEdit.text()
+
 
     def create_add_trail_window(self):
         self.addTrailwindow = AddTrail_Window()
         self.addTrailwindow.show()
-        self.addTrailwindow.ui.Cancel.clicked.connect(self.close_add_trail_window)
         self.addTrailwindow.ui.Create.clicked.connect(self.create_trail)
+        self.addTrailwindow.ui.Cancel.clicked.connect(self.addTrailwindow.close)
            
     def create_delete_trail_window(self):
         self.deleteTrailwindow = DeleteTrail_Window()
@@ -83,18 +98,30 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         for r in rows:
             self.deleteTrailwindow.ui.comboBox.addItem(r[0])
         self.deleteTrailwindow.ui.Delete.clicked.connect(self.delete_trail)
-        self.deleteTrailwindow.ui.Cancel.clicked.connect(self.close_delete_trail_window)
+        self.deleteTrailwindow.ui.Cancel.clicked.connect(self.deleteTrailwindow.close)
         
     def create_add_sensor_window(self):
         self.addSensorwindow = AddSensor_Window()
         self.addSensorwindow.show()
-        self.addSensorwindow.ui.Cancel.clicked.connect(self.close_add_sensor_window)
         self.addSensorwindow.ui.Create.clicked.connect(self.create_sensor)
+        self.addSensorwindow.ui.Cancel.clicked.connect(self.addSensorwindow.close)
         
     def create_delete_sensor_window(self):
         self.deleteSensorwindow = DeleteSensor_Window()
         self.deleteSensorwindow.show()
-        self.deleteSensorwindow.ui.Cancel.clicked.connect(self.close_delete_sensor_window)
+        self.deleteSensorwindow.ui.Cancel.clicked.connect(self.deleteSensorwindow.close)
+        
+    def create_login_window(self):
+        self.loginWindow = Login_Window()
+        self.loginWindow.show()
+        self.loginWindow.ui.LoginButton.clicked.connect(self.login)
+     
+    def create_connect_window(self):
+        self.connectWindow = Connect_Window()
+        self.connectWindow.ui.AddressEdit.setText('192.168.86.175') #Autofill Address
+        #self.connectWindow.ui.PortEdit.setText('38982')
+        self.connectWindow.show()
+        self.connectWindow.ui.ConnectButton.clicked.connect(self.ConnectMySQL)
      
      
     def create_trail(self):
@@ -135,18 +162,6 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.cnx.commit()
         self.deleteTrailwindow.close()
         self.showTree()
-    
-    def close_add_trail_window(self):
-        self.addTrailwindow.close()
-            
-    def close_delete_trail_window(self):
-        self.deleteTrailwindow.close()
-        
-    def close_add_sensor_window(self):
-        self.addSensorwindow.close()
-        
-    def close_delete_sensor_window(self):
-        self.deleteSensorwindow.close()
             
         
 

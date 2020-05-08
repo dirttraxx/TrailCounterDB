@@ -10,9 +10,21 @@ from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, QMutex
 
 from Main_init import Ui_MainWindow
+from AddTrail  import AddTrail_Window
 
 class TrailCounter_MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.addTrailwindow = QMainWindow
+        self.ui.actionAddTrail.triggered.connect(self.create_add_trail_window)
+
+
+    def create_add_trail_window(self):
+        self.addTrailwindow = AddTrail_Window()
+        self.addTrailwindow.show()
+        self.addTrailwindow.ui.Cancel.clicked.connect(self.close_add_trail_window)
+
+    def close_add_trail_window(self):
+        self.addTrailwindow.close()

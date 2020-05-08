@@ -26,8 +26,8 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
     def ConnectMySQL(self):
         try:
             self.cnx = mysql.connector.connect(user='dbtester', password='gominers',
-                              host='192.168.86.175',
-                              port='3306',
+                              host='proxy18.rt3.io',
+                              port='38982',
                               database='trailcountersdb')
 
         except mysql.connector.Error as err:
@@ -77,6 +77,10 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
     def create_delete_trail_window(self):
         self.deleteTrailwindow = DeleteTrail_Window()
         self.deleteTrailwindow.show()
+        query = "SELECT Name FROM TRAIL"
+        self.SQLcursor.execute(query)
+        rows = self.SQLcursor.fetchall()
+        self.deleteTrailwindow.ui.comboBox.addItem(rows)
         self.deleteTrailwindow.ui.Cancel.clicked.connect(self.close_delete_trail_window)
         
     def create_add_sensor_window(self):
@@ -101,11 +105,34 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.cnx.commit() #Commit the changes
         self.addTrailwindow.close()
         self.showTree()
-            
+    
+    def delete_trail(self):
+        trailname = self.deleteTrailwindow.ui.comboBox.text()
+        query = "DELETE FROM TRAIL WHERE name=%s"
+        values = (trailname)
+        self.SQLcursor.execute(query, values)
+        self.cnx.commit()
+        self.deleteTrailwindow.close()
+        self.showTree()
+        
     def create_sensor(self):
         sensorSN = self.addSensorwindow.ui.NameEdit.text()
-        #print(sensorSN)
+        trailname = self.addSensorwindow.ui.LocationEdit.text()
+        query = "INSERT INTO SENSOR (SerialNo, BatteryLife, Position, TrailName, Username) VALUES (%s, %s, %s, %s, %s)"
+        values = (sensorSN, "100", "In the spot", trailname, "user2")
+        self.SQLcursor.execute(query, values)
+        self.cnx.commit()
         self.addSensorwindow.close()
+        self.showTree()
+    
+    def delete_sensor(self):
+        sensorSN = self.deleteSensorwindow.ui.NameEdit.text()
+        query = "DELETE FROM SENSOR WHERE serialNo=%s"
+        values = (sensorSN)
+        self.SQLcursor.execute(query, values)
+        self.cnx.commit()
+        self.deleteTrailwindow.close()
+        self.showTree()
     
     def close_add_trail_window(self):
         self.addTrailwindow.close()

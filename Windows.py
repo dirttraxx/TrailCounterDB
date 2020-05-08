@@ -29,5 +29,6 @@ from DeleteSensor_init import Ui_DeleteSensor
 class DeleteSensor_Window(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-        self.ui = Ui_DeleteTrail()
+        self.ui = Ui_DeleteSensor()
         self.ui.setupUi(self)
+        

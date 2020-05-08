@@ -14,5 +14,5 @@ class main_program(QtCore.QObject):
 app = QtWidgets.QApplication(sys.argv)
 instance = main_program()
 instance.main_window.show()
-instance.main_window.ui.actionAddSensor.triggered.connect(instance.close_window)
+#instance.main_window.ui.actionAddSensor.triggered.connect(instance.close_window)
 app.exec_()

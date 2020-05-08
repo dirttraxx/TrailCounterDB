@@ -27,6 +27,7 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         try:
             self.cnx = mysql.connector.connect(user='dbtester', password='gominers',
                               host='192.168.86.175',
+                              port='3306',
                               database='trailcountersdb')
 
         except mysql.connector.Error as err:
@@ -37,25 +38,34 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
             else:
                 print(err)
         else:
+            self.SQLcursor = self.cnx.cursor()
             self.showTree()        
 
 
     def showTree(self):
-        self.ui.model = QtGui.QStandardItemModel()
-        self.ui.model.setHorizontalHeaderLabels(['Trail', 'Location'])
-        root = self.ui.model.invisibleRootItem()
-        #QModelIndex index = model->index(row, column, parent);
-        root.appendRow([QtGui.QStandardItem('Trail_1'),
-                        QtGui.QStandardItem('Nowhere'),])
-        root.appendRow([QtGui.QStandardItem('Trail_2'),
-                        QtGui.QStandardItem('Somewhere'),])
-        #indexA = self.model.index(0, 0, "Help");
+        query = "SELECT * FROM TRAIL"
+        self.SQLcursor.execute(query)
+        rows = self.SQLcursor.fetchall()    # get all selected rows, as Barmar mentioned
         
+        
+        self.model = QtGui.QStandardItemModel()
+        self.model.setHorizontalHeaderLabels(['Trail', 'Location', 'Owner'])
+        root = self.model.invisibleRootItem()
+        
+        for r in rows:
+            #print(r)
+            root.appendRow([QtGui.QStandardItem(r[0]), QtGui.QStandardItem(r[1]), QtGui.QStandardItem(r[2]),])
+        
+        #QModelIndex index = model->index(row, column, parent);
+        #root.appendRow([QtGui.QStandardItem('Trail_1'), QtGui.QStandardItem('Nowhere'),])
+        #root.appendRow([QtGui.QStandardItem('Trail_2'), QtGui.QStandardItem('Somewhere'),])
+        
+        #indexA = self.model.index(0, 0, "Help");
         #QModelIndex indexA = model->index(0, 0, QModelIndex());
         #QModelIndex indexB = model->index(1, 0, indexA);
         #QModelIndex indexC = model->index(2, 1, QModelIndex());
         
-        self.treeView.setModel(self.model)
+        self.ui.treeView.setModel(self.model)
 
 
     def create_add_trail_window(self):

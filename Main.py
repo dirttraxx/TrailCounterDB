@@ -17,7 +17,7 @@ class TrailCounter_MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.addTrailwindow = QMainWindow
+        self.addTrailwindow = QWidget
         self.ui.actionAddTrail.triggered.connect(self.create_add_trail_window)
 
 
@@ -27,4 +27,7 @@ class TrailCounter_MainWindow(QMainWindow):
         self.addTrailwindow.ui.Cancel.clicked.connect(self.close_add_trail_window)
 
     def close_add_trail_window(self):
+        self.addTrailwindow.close()
+
+    def closeEvent(self, *args, **kwargs):
         self.addTrailwindow.close()

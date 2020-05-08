@@ -11,7 +11,7 @@ from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, QMutex
 
 from AddTrail_init import Ui_NewTrail
 
-class AddTrail_Window(QMainWindow):
+class AddTrail_Window(QWidget):
     def __init__(self):
         super().__init__()
         self.ui = Ui_NewTrail()

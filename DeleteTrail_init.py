@@ -13,8 +13,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_DeleteTrail(object):
     def setupUi(self, DeleteTrail):
         DeleteTrail.setObjectName("DeleteTrail")
-        DeleteTrail.resize(396, 37)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        DeleteTrail.resize(399, 61)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(DeleteTrail.sizePolicy().hasHeightForWidth())
@@ -26,9 +26,17 @@ class Ui_DeleteTrail(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.comboBox = QtWidgets.QComboBox(DeleteTrail)
+        self.groupBox = QtWidgets.QGroupBox(DeleteTrail)
+        self.groupBox.setObjectName("groupBox")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.groupBox)
+        self.gridLayout_2.setContentsMargins(9, 3, 9, 9)
+        self.gridLayout_2.setVerticalSpacing(6)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.comboBox = QtWidgets.QComboBox(self.groupBox)
+        self.comboBox.setMinimumSize(QtCore.QSize(200, 0))
         self.comboBox.setObjectName("comboBox")
-        self.horizontalLayout.addWidget(self.comboBox)
+        self.gridLayout_2.addWidget(self.comboBox, 0, 0, 1, 1)
+        self.horizontalLayout.addWidget(self.groupBox)
         self.Delete = QtWidgets.QPushButton(DeleteTrail)
         self.Delete.setObjectName("Delete")
         self.horizontalLayout.addWidget(self.Delete)
@@ -46,6 +54,7 @@ class Ui_DeleteTrail(object):
     def retranslateUi(self, DeleteTrail):
         _translate = QtCore.QCoreApplication.translate
         DeleteTrail.setWindowTitle(_translate("DeleteTrail", "Delete a Trail"))
+        self.groupBox.setTitle(_translate("DeleteTrail", "Trail Name"))
         self.Delete.setText(_translate("DeleteTrail", "Delete"))
         self.Cancel.setText(_translate("DeleteTrail", "Cancel"))
 

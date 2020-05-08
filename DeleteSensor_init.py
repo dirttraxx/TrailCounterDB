@@ -13,8 +13,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_DeleteSensor(object):
     def setupUi(self, DeleteSensor):
         DeleteSensor.setObjectName("DeleteSensor")
-        DeleteSensor.resize(396, 37)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        DeleteSensor.resize(399, 61)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(DeleteSensor.sizePolicy().hasHeightForWidth())
@@ -26,9 +26,17 @@ class Ui_DeleteSensor(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.comboBox = QtWidgets.QComboBox(DeleteSensor)
+        self.groupBox_2 = QtWidgets.QGroupBox(DeleteSensor)
+        self.groupBox_2.setObjectName("groupBox_2")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox_2)
+        self.gridLayout_3.setContentsMargins(9, 3, 9, 9)
+        self.gridLayout_3.setVerticalSpacing(6)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.comboBox = QtWidgets.QComboBox(self.groupBox_2)
+        self.comboBox.setMinimumSize(QtCore.QSize(200, 0))
         self.comboBox.setObjectName("comboBox")
-        self.horizontalLayout.addWidget(self.comboBox)
+        self.gridLayout_3.addWidget(self.comboBox, 0, 0, 1, 1)
+        self.horizontalLayout.addWidget(self.groupBox_2)
         self.Delete = QtWidgets.QPushButton(DeleteSensor)
         self.Delete.setObjectName("Delete")
         self.horizontalLayout.addWidget(self.Delete)
@@ -46,6 +54,7 @@ class Ui_DeleteSensor(object):
     def retranslateUi(self, DeleteSensor):
         _translate = QtCore.QCoreApplication.translate
         DeleteSensor.setWindowTitle(_translate("DeleteSensor", "Delete a Sensor"))
+        self.groupBox_2.setTitle(_translate("DeleteSensor", "Sensor SN"))
         self.Delete.setText(_translate("DeleteSensor", "Delete"))
         self.Cancel.setText(_translate("DeleteSensor", "Cancel"))
 

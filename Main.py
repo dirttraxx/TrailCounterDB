@@ -191,7 +191,7 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         
     def create_sensor(self):
         sensorSN = self.addSensorwindow.ui.NameEdit.text()
-        trailname = self.addSensorwindow.ui.combBox.currentText()
+        trailname = self.addSensorwindow.ui.comboBox.currentText()
         query = "INSERT INTO SENSOR (SerialNo, BatteryLife, Position, TrailName, Username) VALUES (%s, %s, %s, %s, %s)"
         values = (sensorSN, "100", "In the spot", trailname, self.user)
         self.SQLcursor.execute(query, values)

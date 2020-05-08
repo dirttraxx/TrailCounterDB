@@ -72,6 +72,7 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.addTrailwindow = AddTrail_Window()
         self.addTrailwindow.show()
         self.addTrailwindow.ui.Cancel.clicked.connect(self.close_add_trail_window)
+        self.addTrailwindow.ui.Create.clicked.connect(self.create_trail)
            
     def create_delete_trail_window(self):
         self.deleteTrailwindow = DeleteTrail_Window()
@@ -82,12 +83,29 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.addSensorwindow = AddSensor_Window()
         self.addSensorwindow.show()
         self.addSensorwindow.ui.Cancel.clicked.connect(self.close_add_sensor_window)
+        self.addSensorwindow.ui.Create.clicked.connect(self.create_sensor)
         
     def create_delete_sensor_window(self):
         self.deleteSensorwindow = DeleteSensor_Window()
         self.deleteSensorwindow.show()
         self.deleteSensorwindow.ui.Cancel.clicked.connect(self.close_delete_sensor_window)
-        
+     
+     
+    def create_trail(self):
+        trailname = self.addTrailwindow.ui.NameEdit.text()
+        location = self.addTrailwindow.ui.LocationEdit.text()
+        #print(trailname)
+        query = "INSERT INTO TRAIL (Name, Location, Username) VALUES (%s, %s, %s)"
+        values = (trailname, location, "user1")
+        self.SQLcursor.execute(query, values)
+        self.cnx.commit() #Commit the changes
+        self.addTrailwindow.close()
+        self.showTree()
+            
+    def create_sensor(self):
+        sensorSN = self.addSensorwindow.ui.NameEdit.text()
+        #print(sensorSN)
+        self.addSensorwindow.close()
     
     def close_add_trail_window(self):
         self.addTrailwindow.close()

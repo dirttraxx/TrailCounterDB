@@ -89,6 +89,7 @@
     </widget>
     <addaction name="menuTrail"/>
     <addaction name="menuSensor"/>
+    <addaction name="actionRefresh"/>
    </widget>
    <widget class="QMenu" name="menuAccount">
     <property name="title">
@@ -123,6 +124,11 @@
   <action name="actionDeleteSensor">
    <property name="text">
     <string>Delete</string>
+   </property>
+  </action>
+  <action name="actionRefresh">
+   <property name="text">
+    <string>Refresh</string>
    </property>
   </action>
  </widget>

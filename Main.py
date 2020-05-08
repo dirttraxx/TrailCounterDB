@@ -56,8 +56,10 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
 
 
     def showTree(self):
+        username = self.user
         query = "SELECT * FROM TRAIL WHERE UserName=%s"
-        self.SQLcursor.execute(query)
+        values = [username]
+        self.SQLcursor.execute(query,values)
         rows = self.SQLcursor.fetchall()    # get all selected rows, as Barmar mentioned
         
         
@@ -85,7 +87,8 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         L_psw = self.loginWindow.ui.PasswordEdit.text()
         
         query = "SELECT Password FROM USER WHERE Username=%s"
-        self.SQLcursor.execute(query,(L_uname,))
+        values = [L_uname]
+        self.SQLcursor.execute(query,values)
         db_psw = self.SQLcursor.fetchall()
         #print(db_psw[0][0])
         if (L_psw==db_psw[0][0]):

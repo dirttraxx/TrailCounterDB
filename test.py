@@ -9,6 +9,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from AddTrail import Ui_NewTrail
+import mysql.connector
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -30,7 +31,7 @@ class Ui_MainWindow(object):
         self.treeView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.treeView.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
         self.treeView.setObjectName("treeView")
-        self.showTree()
+        #self.showTree()
         self.gridLayout_2.addWidget(self.treeView, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         
@@ -69,6 +70,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuAccount.menuAction())
 
+        self.actionAddTrail.triggered.connect(self.ConnectMySQL)
         self.actionAddTrail.triggered.connect(self.AddTrail)
 
         self.retranslateUi(MainWindow)
@@ -86,6 +88,22 @@ class Ui_MainWindow(object):
         self.actionDeleteTrail.setText(_translate("MainWindow", "Delete"))
         self.actionAddSensor.setText(_translate("MainWindow", "Add"))
         self.actionDeleteSensor.setText(_translate("MainWindow", "Delete"))
+        
+    def ConnectMySQL(self):
+        try:
+            cnx = mysql.connector.connect(user='dbtester', password='gominers',
+                              host='192.168.86.175',
+                              database='trailcountersdb')
+
+        except mysql.connector.Error as err:
+            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                print("Something is wrong with your user name or password")
+            elif err.errno == errorcode.ER_BAD_DB_ERROR:
+                print("Database does not exist")
+            else:
+                print(err)
+        else:
+            self.showTree()
         
     def AddTrail(self):
         self.NewTrail = QtWidgets.QWidget()

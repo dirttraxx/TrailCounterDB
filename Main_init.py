@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -56,12 +56,15 @@ class Ui_MainWindow(object):
         self.actionAddSensor.setObjectName("actionAddSensor")
         self.actionDeleteSensor = QtWidgets.QAction(MainWindow)
         self.actionDeleteSensor.setObjectName("actionDeleteSensor")
+        self.actionRefresh = QtWidgets.QAction(MainWindow)
+        self.actionRefresh.setObjectName("actionRefresh")
         self.menuTrail.addAction(self.actionAddTrail)
         self.menuTrail.addAction(self.actionDeleteTrail)
         self.menuSensor.addAction(self.actionAddSensor)
         self.menuSensor.addAction(self.actionDeleteSensor)
         self.menuFile.addAction(self.menuTrail.menuAction())
         self.menuFile.addAction(self.menuSensor.menuAction())
+        self.menuFile.addAction(self.actionRefresh)
         self.menuAccount.addAction(self.actionLogin)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuAccount.menuAction())
@@ -81,3 +84,14 @@ class Ui_MainWindow(object):
         self.actionDeleteTrail.setText(_translate("MainWindow", "Delete"))
         self.actionAddSensor.setText(_translate("MainWindow", "Add"))
         self.actionDeleteSensor.setText(_translate("MainWindow", "Delete"))
+        self.actionRefresh.setText(_translate("MainWindow", "Refresh"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())

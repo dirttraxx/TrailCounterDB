@@ -11,7 +11,6 @@ from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, QMutex
 from Main import TrailCounter_MainWindow
 
 app = QApplication(sys.argv)
-app.setStyle("fusion")
 
 
 

@@ -70,7 +70,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuAccount.menuAction())
 
-        self.actionAddTrail.triggered.connect(self.ConnectMySQL)
+        self.actionLogin.triggered.connect(self.ConnectMySQL)
         self.actionAddTrail.triggered.connect(self.AddTrail)
 
         self.retranslateUi(MainWindow)

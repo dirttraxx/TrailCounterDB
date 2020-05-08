@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'AddTrail.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -33,7 +33,7 @@ class Ui_NewTrail(object):
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.NameEdit = QtWidgets.QLineEdit(self.groupBox)
         self.NameEdit.setMinimumSize(QtCore.QSize(100, 0))
-        self.NameEdit.setMaxLength(20)
+        self.NameEdit.setMaxLength(30)
         self.NameEdit.setObjectName("NameEdit")
         self.gridLayout_2.addWidget(self.NameEdit, 0, 0, 1, 1)
         self.horizontalLayout_2.addWidget(self.groupBox)
@@ -45,6 +45,7 @@ class Ui_NewTrail(object):
         self.LocationEdit = QtWidgets.QLineEdit(self.groupBox_2)
         self.LocationEdit.setMinimumSize(QtCore.QSize(200, 0))
         self.LocationEdit.setText("")
+        self.LocationEdit.setMaxLength(60)
         self.LocationEdit.setObjectName("LocationEdit")
         self.gridLayout_3.addWidget(self.LocationEdit, 0, 0, 1, 1)
         self.horizontalLayout_2.addWidget(self.groupBox_2)
@@ -70,8 +71,18 @@ class Ui_NewTrail(object):
     def retranslateUi(self, NewTrail):
         _translate = QtCore.QCoreApplication.translate
         NewTrail.setWindowTitle(_translate("NewTrail", "Create a New Trail"))
-        self.groupBox.setTitle(_translate("NewTrail", "Trail Name"))
+        self.groupBox.setTitle(_translate("NewTrail", "*Trail Name"))
         self.NameEdit.setText(_translate("NewTrail", "Traily McTrailFace"))
         self.groupBox_2.setTitle(_translate("NewTrail", "Location"))
         self.Create.setText(_translate("NewTrail", "Create"))
         self.Cancel.setText(_translate("NewTrail", "Cancel"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    NewTrail = QtWidgets.QWidget()
+    ui = Ui_NewTrail()
+    ui.setupUi(NewTrail)
+    NewTrail.show()
+    sys.exit(app.exec_())

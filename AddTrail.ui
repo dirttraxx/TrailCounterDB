@@ -37,7 +37,7 @@
      <item>
       <widget class="QGroupBox" name="groupBox">
        <property name="title">
-        <string>Trail Name</string>
+        <string>*Trail Name</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <property name="leftMargin">
@@ -67,7 +67,7 @@
            <string>Traily McTrailFace</string>
           </property>
           <property name="maxLength">
-           <number>20</number>
+           <number>30</number>
           </property>
          </widget>
         </item>
@@ -96,6 +96,9 @@
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="maxLength">
+           <number>60</number>
           </property>
          </widget>
         </item>

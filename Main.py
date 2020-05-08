@@ -144,7 +144,7 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
             self.deleteSensorwindow.show()
             query = "SELECT SerialNo FROM SENSOR WHERE UserName=%s"
             values = [username]
-            self.SQLcursor.execute(query,valuess)
+            self.SQLcursor.execute(query,values)
             rows = self.SQLcursor.fetchall()
             for r in rows:
                 self.deleteSensorwindow.ui.comboBox.addItem(r[0])

@@ -97,8 +97,15 @@
     </property>
     <addaction name="actionLogin"/>
    </widget>
+   <widget class="QMenu" name="menuServer">
+    <property name="title">
+     <string>Database</string>
+    </property>
+    <addaction name="actionConnect"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuAccount"/>
+   <addaction name="menuServer"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionLogin">
@@ -129,6 +136,11 @@
   <action name="actionRefresh">
    <property name="text">
     <string>Refresh</string>
+   </property>
+  </action>
+  <action name="actionConnect">
+   <property name="text">
+    <string>Connect</string>
    </property>
   </action>
  </widget>

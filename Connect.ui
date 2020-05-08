@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Login</class>
- <widget class="QWidget" name="Login">
+ <class>Connect</class>
+ <widget class="QWidget" name="Connect">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>253</width>
-    <height>151</height>
+    <height>98</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,17 +17,17 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Login</string>
+   <string>Connect to a Database</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
      <item>
-      <widget class="QGroupBox" name="groupBox_3">
+      <widget class="QGroupBox" name="groupBox">
        <property name="title">
-        <string>Username</string>
+        <string>Connection Address</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_4">
+       <layout class="QGridLayout" name="gridLayout_2">
         <property name="leftMargin">
          <number>9</number>
         </property>
@@ -44,10 +44,10 @@
          <number>6</number>
         </property>
         <item row="0" column="0">
-         <widget class="QLineEdit" name="UsernameEdit">
+         <widget class="QLineEdit" name="AddressEdit">
           <property name="minimumSize">
            <size>
-            <width>100</width>
+            <width>150</width>
             <height>0</height>
            </size>
           </property>
@@ -63,39 +63,45 @@
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="groupBox_4">
+      <widget class="QGroupBox" name="groupBox_2">
        <property name="title">
-        <string>Password</string>
+        <string>Port</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <property name="leftMargin">
-         <number>9</number>
-        </property>
+       <layout class="QGridLayout" name="gridLayout_3">
         <property name="topMargin">
          <number>3</number>
-        </property>
-        <property name="rightMargin">
-         <number>9</number>
         </property>
         <property name="bottomMargin">
          <number>9</number>
         </property>
-        <property name="verticalSpacing">
-         <number>6</number>
-        </property>
         <item row="0" column="0">
-         <widget class="QLineEdit" name="PasswordEdit">
+         <widget class="QLineEdit" name="PortEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
-            <width>100</width>
+            <width>37</width>
             <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>37</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="text">
            <string/>
           </property>
           <property name="maxLength">
-           <number>12</number>
+           <number>5</number>
+          </property>
+          <property name="placeholderText">
+           <string>3306</string>
           </property>
          </widget>
         </item>
@@ -123,9 +129,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="LoginButton">
+      <widget class="QPushButton" name="ConnectButton">
        <property name="text">
-        <string>Login</string>
+        <string>Connect</string>
        </property>
       </widget>
      </item>

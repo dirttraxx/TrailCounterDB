@@ -42,6 +42,8 @@ class Ui_MainWindow(object):
         self.menuSensor.setObjectName("menuSensor")
         self.menuAccount = QtWidgets.QMenu(self.menubar)
         self.menuAccount.setObjectName("menuAccount")
+        self.menuServer = QtWidgets.QMenu(self.menubar)
+        self.menuServer.setObjectName("menuServer")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -58,6 +60,8 @@ class Ui_MainWindow(object):
         self.actionDeleteSensor.setObjectName("actionDeleteSensor")
         self.actionRefresh = QtWidgets.QAction(MainWindow)
         self.actionRefresh.setObjectName("actionRefresh")
+        self.actionConnect = QtWidgets.QAction(MainWindow)
+        self.actionConnect.setObjectName("actionConnect")
         self.menuTrail.addAction(self.actionAddTrail)
         self.menuTrail.addAction(self.actionDeleteTrail)
         self.menuSensor.addAction(self.actionAddSensor)
@@ -66,8 +70,10 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.menuSensor.menuAction())
         self.menuFile.addAction(self.actionRefresh)
         self.menuAccount.addAction(self.actionLogin)
+        self.menuServer.addAction(self.actionConnect)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuAccount.menuAction())
+        self.menubar.addAction(self.menuServer.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -79,12 +85,14 @@ class Ui_MainWindow(object):
         self.menuTrail.setTitle(_translate("MainWindow", "Trail"))
         self.menuSensor.setTitle(_translate("MainWindow", "Sensor"))
         self.menuAccount.setTitle(_translate("MainWindow", "Account"))
+        self.menuServer.setTitle(_translate("MainWindow", "Database"))
         self.actionLogin.setText(_translate("MainWindow", "Login"))
         self.actionAddTrail.setText(_translate("MainWindow", "Add"))
         self.actionDeleteTrail.setText(_translate("MainWindow", "Delete"))
         self.actionAddSensor.setText(_translate("MainWindow", "Add"))
         self.actionDeleteSensor.setText(_translate("MainWindow", "Delete"))
         self.actionRefresh.setText(_translate("MainWindow", "Refresh"))
+        self.actionConnect.setText(_translate("MainWindow", "Connect"))
 
 
 if __name__ == "__main__":

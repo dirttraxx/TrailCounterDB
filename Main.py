@@ -98,10 +98,12 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.addTrailwindow.ui.Cancel.clicked.connect(self.addTrailwindow.close)
            
     def create_delete_trail_window(self):
+        username = self.user
         self.deleteTrailwindow = DeleteTrail_Window()
         self.deleteTrailwindow.show()
-        query = "SELECT Name FROM TRAIL"
-        self.SQLcursor.execute(query)
+        query = "SELECT Name FROM TRAIL WHERE Username=%s"
+        values = [username]
+        self.SQLcursor.execute(query,values)
         rows = self.SQLcursor.fetchall()
         for r in rows:
             self.deleteTrailwindow.ui.comboBox.addItem(r[0])
@@ -109,16 +111,25 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         self.deleteTrailwindow.ui.Cancel.clicked.connect(self.deleteTrailwindow.close)
         
     def create_add_sensor_window(self):
+        username = self.user
         self.addSensorwindow = AddSensor_Window()
         self.addSensorwindow.show()
+        query = "SELECT Name FROM TRAIL WHERE Username=%s"
+        values = [username]
+        self.SQLcursor.execute(query,values)
+        rows = self.SQLcursor.fetchall()
+        for r in rows:
+            self.addSensorwindow.ui.comboBox.addItem(r[0])
         self.addSensorwindow.ui.Create.clicked.connect(self.create_sensor)
         self.addSensorwindow.ui.Cancel.clicked.connect(self.addSensorwindow.close)
         
     def create_delete_sensor_window(self):
+        username = self.user
         self.deleteSensorwindow = DeleteSensor_Window()
         self.deleteSensorwindow.show()
-        query = "SELECT SerialNo FROM SENSOR"
-        self.SQLcursor.execute(query)
+        query = "SELECT SerialNo FROM SENSOR WHERE UserName=%s"
+        values = [username]
+        self.SQLcursor.execute(query,valuess)
         rows = self.SQLcursor.fetchall()
         for r in rows:
             self.deleteSensorwindow.ui.comboBox.addItem(r[0])
@@ -160,7 +171,7 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         
     def create_sensor(self):
         sensorSN = self.addSensorwindow.ui.NameEdit.text()
-        trailname = self.addSensorwindow.ui.LocationEdit.text()
+        trailname = self.addSensorwindow.ui.combBox.currentText()
         query = "INSERT INTO SENSOR (SerialNo, BatteryLife, Position, TrailName, Username) VALUES (%s, %s, %s, %s, %s)"
         values = (sensorSN, "100", "In the spot", trailname, "user2")
         self.SQLcursor.execute(query, values)

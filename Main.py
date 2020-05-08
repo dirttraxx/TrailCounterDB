@@ -71,11 +71,10 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
         root = self.model.invisibleRootItem()
         
         for t in trails:
-           
             root.appendRow([QtGui.QStandardItem(t[0]), QtGui.QStandardItem(t[1]), QtGui.QStandardItem(t[2]),QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem("")])
             for s in sensors:
-                if s[3]==t[2]:
-                    root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2]),])
+                if s[3]==t[0]:
+                    root.appendRow([QtGui.QStandardItem(""),QtGui.QStandardItem(""),QtGui.QStandardItem(""), QtGui.QStandardItem(s[0]), QtGui.QStandardItem(s[1]), QtGui.QStandardItem(s[2])])
             
         for s in sensors:
             #print(r)
@@ -165,6 +164,8 @@ class TrailCounter_MainWindow(QtWidgets.QMainWindow):
     def create_login_window(self):
         if self.connection_status == "Connected":
             self.loginWindow = Login_Window()
+            self.loginWindow.ui.UsernameEdit.setText('user1') #Autofill Address
+            self.loginWindow.ui.PasswordEdit.setText('pass1') #Autofill Address
             self.loginWindow.show()
             self.loginWindow.ui.LoginButton.clicked.connect(self.login)
         else:
